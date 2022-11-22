@@ -17,10 +17,11 @@ namespace GameStore.Data.Entities
         public string Developer { get; set; }
 
         [Required]
-        public GamePlatform Platform { get; set; }
+        public string Platform { get; set; }
 
         [Required]
-        public GameGenre Genre { get; set; }
+        [StringLength(64)]
+        public string Genre { get; set; }
 
         [Required]
         public double Price { get; set; }
