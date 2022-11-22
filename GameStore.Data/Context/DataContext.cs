@@ -1,5 +1,7 @@
 ﻿using GameStore.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+using System;
 
 namespace GameStore.Data.Context
 {
@@ -14,9 +16,13 @@ namespace GameStore.Data.Context
             modelBuilder.Entity<Library>().HasKey(x => new { x.GameId, x.UserId });
             modelBuilder.Entity<Cart>().HasKey(x => new { x.GameId, x.UserId });
         }
-        DbSet<User> Users { get; set; }
-        DbSet<Game> Games { get; set; }
-        DbSet<Cart> Carts { get; set; }
-        DbSet<Library> Libraries { get; set; }
+
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Game> Games { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Library> Libraries { get; set; }
+
+
     }
 }
