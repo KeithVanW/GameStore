@@ -17,6 +17,7 @@ namespace GameStore.Data.Entities
         public string Developer { get; set; }
 
         [Required]
+        [StringLength(64)]
         public string Platform { get; set; }
 
         [Required]
