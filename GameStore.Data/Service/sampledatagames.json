@@ -1,0 +1,29 @@
+[
+  {
+    "Name": "Among Us",
+    "Developer": "InnerSloth",
+    "Platform": "PC",
+    "Genre": "Strategy",
+    "Price": 19.99,
+    "Description": "Among Us is a party game of teamwork and betrayal. Crewmates work together to complete tasks before one or more Impostors can kill everyone aboard.",
+    "ImageURL": "test.jpg"
+  },
+  {
+    "Name": "Apex Legends",
+    "Developer": "Respawn Entertainment",
+    "Platform": "PC",
+    "Genre": "Battle Royal",
+    "Price": 0,
+    "Description": "Apex Legends is a free-to-play hero shooter game where legendary competitors battle for glory, fame, and fortune on the fringes of the Frontier.",
+    "ImageURL": "test.jpg"
+  },
+  {
+    "Name": "Battlefield 2042",
+    "Developer": "Dice",
+    "Platform": "PC",
+    "Genre": "FPS / Online Shooter",
+    "Price": 59.99,
+    "Description": "Call the shots in Season 3: Escalation. Battlefield™ 2042 is a first-person shooter that marks the return to the iconic all-out warfare of the franchise. ",
+    "ImageURL": "test.jpg"
+  }
+]

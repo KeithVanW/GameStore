@@ -3,6 +3,7 @@ using GameStore.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameStore.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221122105442_ChangedEnumsToStrings")]
+    partial class ChangedEnumsToStrings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,41 +81,6 @@ namespace GameStore.Data.Migrations
                     b.HasKey("GameID");
 
                     b.ToTable("Games");
-
-                    b.HasData(
-                        new
-                        {
-                            GameID = 1,
-                            Description = "1 player is the imposter, the others do tasks.",
-                            Developer = "InnerSloth",
-                            Genre = 2,
-                            ImageURL = "test",
-                            Name = "Among us",
-                            Platform = 0,
-                            Price = 19.989999999999998
-                        },
-                        new
-                        {
-                            GameID = 2,
-                            Description = "Battle royal shooter thing",
-                            Developer = "Respawn Entertainment",
-                            Genre = 0,
-                            ImageURL = "test",
-                            Name = "Apex Legends",
-                            Platform = 0,
-                            Price = 0.0
-                        },
-                        new
-                        {
-                            GameID = 3,
-                            Description = "Online shooter",
-                            Developer = "Dice",
-                            Genre = 0,
-                            ImageURL = "test",
-                            Name = "Battlefield 2042",
-                            Platform = 0,
-                            Price = 59.990000000000002
-                        });
                 });
 
             modelBuilder.Entity("GameStore.Data.Entities.Library", b =>
@@ -156,22 +124,6 @@ namespace GameStore.Data.Migrations
                     b.HasKey("UserID");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            UserID = 1,
-                            Email = "Keith@email.com",
-                            Name = "Keith",
-                            Password = "1234"
-                        },
-                        new
-                        {
-                            UserID = 2,
-                            Email = "Emlyn@email.com",
-                            Name = "Emlyn",
-                            Password = "4321"
-                        });
                 });
 
             modelBuilder.Entity("GameStore.Data.Entities.Cart", b =>
