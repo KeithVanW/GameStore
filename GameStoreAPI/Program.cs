@@ -12,9 +12,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>();
 builder.Services.AddScoped<IGameService, GameService>();
-
-DataContext context = new DataContext();
-GameService service = new GameService(context);
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddAutoMapper(typeof(GameService).Assembly);
 
 var app = builder.Build();
 

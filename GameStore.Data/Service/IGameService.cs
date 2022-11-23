@@ -4,16 +4,14 @@ namespace GameStore.Data.Service
 {
     public interface IGameService
     {
-        Task<IEnumerable<Game>> GetAllGames();
+        Task<IEnumerable<GameDto>> GetAllGames();
 
-        Task<Game?> GetSingleGame(int id);
+        Task<GameDto?> GetSingleGame(int id);
 
-        Task<IEnumerable<Game>> AddGame(Game game);
+        Task<IEnumerable<GameDto>> AddGame(GameDto game);
 
-        Task<IEnumerable<Game>?> UpdateGame(int id, Game request);
+        Task<IEnumerable<GameDto>?> UpdateGame(int id, GameDto request);
 
-        Task<IEnumerable<Game>?> DeleteGame(int id);
+        Task<IEnumerable<GameDto>?> DeleteGame(int id);
     }
-
-    // List instead of Ienumerable???
 }
