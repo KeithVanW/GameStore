@@ -1,5 +1,4 @@
 ﻿using GameStore.Data.Context;
-using GameStore.Data.Entities;
 using GameStore.Data.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,37 +18,38 @@ namespace GameStoreAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet]
-        public async Task<IEnumerable<Game>> GetAllGames()
-        {
-            IEnumerable<Game> games = await _gameService.GetAllGames();
-
-            return games;
-        }
-
-        [AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<Game> GetSingleGame(int id)
+        public async Task<GameDto> GetSingleGame(int id)
         {
-            Game? result = await _gameService.GetSingleGame(id);
+            GameDto? result = await _gameService.GetSingleGame(id);
+
             if (result == null)
                 return null;
 
             return result;
         }
 
-        [HttpPost]
-        public async Task<IEnumerable<Game>> AddGame(Game game)
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IEnumerable<GameDto>> GetAllGames() 
         {
-            IEnumerable<Game> result = await _gameService.AddGame(game);
+            IEnumerable<GameDto> result = await _gameService.GetAllGames();
+
+            return result;
+        }
+
+        [HttpPost]
+        public async Task<IEnumerable<GameDto>> AddGame(GameDto game)
+        {
+            IEnumerable<GameDto> result = await _gameService.AddGame(game);
 
             return result;
         }
 
         [HttpPut("{id}")]
-        public async Task<IEnumerable<Game>> UpdateGame(int id, Game request)
+        public async Task<IEnumerable<GameDto>> UpdateGame(int id, GameDto request)
         {
-            IEnumerable<Game>? result = await _gameService.UpdateGame(id, request);
+            IEnumerable<GameDto>? result = await _gameService.UpdateGame(id, request);
             if (result == null)
                 return null;
 
@@ -57,9 +57,9 @@ namespace GameStoreAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IEnumerable<Game>> DeleteGame(int id)
+        public async Task<IEnumerable<GameDto>> DeleteGame(int id)
         {
-            IEnumerable<Game>? result = await _gameService.DeleteGame(id);
+            IEnumerable<GameDto>? result = await _gameService.DeleteGame(id);
             if (result == null)
                 return null;
 

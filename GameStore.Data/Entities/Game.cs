@@ -1,5 +1,4 @@
-﻿using GameStore.Data.Enum;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace GameStore.Data.Entities
 {

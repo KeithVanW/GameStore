@@ -14,6 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnStr")));
 builder.Services.AddScoped<IGameService, GameService>();
 
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddAutoMapper(typeof(GameService).Assembly);
+
 // For Identity
 builder.Services
     .AddIdentity<User, IdentityRole>()
