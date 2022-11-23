@@ -5,46 +5,17 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Text;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+RegisterServices(builder);
 
-builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnStr")));
-builder.Services.AddScoped<IGameService, GameService>();
+ConfigureLogger(builder);
 
-builder.Services.AddAutoMapper(typeof(Program).Assembly);
-builder.Services.AddAutoMapper(typeof(GameService).Assembly);
-
-// For Identity
-builder.Services
-    .AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<DataContext>()
-    .AddDefaultTokenProviders();
-
-// Adding Authentication
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-
-// Adding Jwt Bearer
-.AddJwtBearer(options =>
- {
-     options.SaveToken = true;
-     options.RequireHttpsMetadata = false;
-     options.TokenValidationParameters = new TokenValidationParameters()
-     {
-         ValidateIssuer = true,
-         ValidateAudience = true,
-         ValidAudience = builder.Configuration["JWT:ValidAudience"],
-         ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
-         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]!))
-     };
- });
+ConfigureJwt(builder);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -60,6 +31,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSerilogRequestLogging();
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
@@ -68,3 +41,57 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void ConfigureLogger(WebApplicationBuilder builder)
+{
+    IConfigurationRoot configuration = new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json")
+        .Build();
+
+    Log.Logger = new LoggerConfiguration()
+        .ReadFrom.Configuration(configuration)
+        .CreateLogger();
+
+    builder.Host.UseSerilog();
+}
+
+void RegisterServices(WebApplicationBuilder builder)
+{
+    builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnStr")));
+    builder.Services.AddScoped<IGameService, GameService>();
+
+    builder.Services.AddAutoMapper(typeof(Program).Assembly);
+    builder.Services.AddAutoMapper(typeof(GameService).Assembly);
+}
+
+void ConfigureJwt(WebApplicationBuilder builder)
+{
+    // For Identity
+    builder.Services
+        .AddIdentity<User, IdentityRole>()
+        .AddEntityFrameworkStores<DataContext>()
+        .AddDefaultTokenProviders();
+
+    // Adding Authentication
+    builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+
+    // Adding Jwt Bearer
+    .AddJwtBearer(options =>
+    {
+        options.SaveToken = true;
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["JWT:ValidAudience"],
+            ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]!))
+        };
+    });
+}
