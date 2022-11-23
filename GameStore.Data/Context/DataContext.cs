@@ -2,22 +2,24 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GameStore.Data.Context
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<User>
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=GameStoreDB;Trusted_Connection=True;TrustServerCertificate=Yes;");
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Library>().HasKey(x => new { x.GameId, x.UserId });
             modelBuilder.Entity<Cart>().HasKey(x => new { x.GameId, x.UserId });
         }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Library> Libraries { get; set; }

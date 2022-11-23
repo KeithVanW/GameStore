@@ -1,5 +1,4 @@
-﻿using GameStore.Data.Enum;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace GameStore.Data.Entities
 {
@@ -17,6 +16,7 @@ namespace GameStore.Data.Entities
         public string Developer { get; set; }
 
         [Required]
+        [StringLength(64)]
         public string Platform { get; set; }
 
         [Required]
