@@ -12,6 +12,6 @@ namespace GameStore.Data.Service
 
         Task<IEnumerable<GameDto>?> UpdateGame(int id, GameDto request);
 
-        Task<IEnumerable<GameDto>?> DeleteGame(int id);
+        Task<int> DeleteGame(int id);
     }
 }

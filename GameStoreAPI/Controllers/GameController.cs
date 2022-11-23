@@ -2,6 +2,7 @@
 using GameStore.Data.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace GameStoreAPI.Controllers
 {
@@ -11,27 +12,32 @@ namespace GameStoreAPI.Controllers
     public class GameController : ControllerBase
     {
         private readonly IGameService _gameService;
+        private readonly ILogger<GameController> _logger;
 
-        public GameController(IGameService gameService)
+        public GameController(IGameService gameService, ILogger<GameController> logger)
         {
             _gameService = gameService;
+            _logger = logger;
         }
 
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<GameDto> GetSingleGame(int id)
+        public async Task<ActionResult<GameDto>> GetSingleGame(int id)
         {
             GameDto? result = await _gameService.GetSingleGame(id);
 
             if (result == null)
-                return null;
+            {
+                _logger.LogWarning("Game could not be found, returned 'null'");
+                return NotFound();
+            }
 
-            return result;
+            return Ok(result);
         }
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IEnumerable<GameDto>> GetAllGames() 
+        public async Task<IEnumerable<GameDto>> GetAllGames()
         {
             IEnumerable<GameDto> result = await _gameService.GetAllGames();
 
@@ -57,13 +63,20 @@ namespace GameStoreAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IEnumerable<GameDto>> DeleteGame(int id)
+        public async Task<ActionResult> DeleteGame(int id)
         {
-            IEnumerable<GameDto>? result = await _gameService.DeleteGame(id);
-            if (result == null)
-                return null;
+            int result = await _gameService.DeleteGame(id);
+            if (result == 1)
+                return Ok("Product deleted");
 
-            return result;
+            if (result == -1)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return BadRequest("Something went boo boo");
+            }
         }
     }
 }

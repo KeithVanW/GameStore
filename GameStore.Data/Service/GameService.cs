@@ -52,35 +52,25 @@ namespace GameStore.Data.Service
 
         public async Task<IEnumerable<GameDto>?> UpdateGame(int id, GameDto request)
         {
-            Game? game = await _dataContext.Games.FindAsync(id);
-
-            if (game == null)
-                return null;
-
-            game.Name = request.Name;
-            game.Developer = request.Developer;
-            game.Platform = request.Platform;
-            game.Genre = request.Genre;
-            game.Price = request.Price;
-            game.Description = request.Description;
-            game.ImageURL = request.ImageURL;
-
+            var game = _mapper.Map<Game>(request);
+            game.GameID = id;
+            _dataContext.Games.Update(game);
             await _dataContext.SaveChangesAsync();
 
             return await GetAllGames();
         }
 
-        public async Task<IEnumerable<GameDto>?> DeleteGame(int id)
+        public async Task<int> DeleteGame(int id)
         {
-            Game? game = await _dataContext.Games.FindAsync(id);
-
-            if (game == null)
-                return null;
+            if (!_dataContext.Games.Any(x =>  x.GameID == id))
+            {
+                return -1;
+            }
+            
+            Game game = new Game { GameID = id };
 
             _dataContext.Games.Remove(game);
-            await _dataContext.SaveChangesAsync();
-
-            return await GetAllGames();
+            return await _dataContext.SaveChangesAsync();
         }
 
         private void LoadSampleData()
