@@ -1,27 +1,33 @@
-﻿using GameStore.Data.Entities;
+﻿using GameStore.Data.Context;
+using GameStore.Data.Entities;
 using GameStore.Data.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameStoreAPI.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class GameController : ControllerBase
     {
         private readonly IGameService _gameService;
+
         public GameController(IGameService gameService)
         {
             _gameService = gameService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
-        public async Task<IEnumerable<Game>> GetAllGames() 
+        public async Task<IEnumerable<Game>> GetAllGames()
         {
             IEnumerable<Game> games = await _gameService.GetAllGames();
 
             return games;
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<Game> GetSingleGame(int id)
         {
@@ -59,6 +65,5 @@ namespace GameStoreAPI.Controllers
 
             return result;
         }
-
     }
 }
