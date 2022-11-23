@@ -57,8 +57,6 @@ namespace GameStore.Data.Service
             if (game == null)
                 return null;
 
-            //game = _mapper.Map<Game>(request);
-
             game.Name = request.Name;
             game.Developer = request.Developer;
             game.Platform = request.Platform;
