@@ -15,8 +15,6 @@ namespace GameStore.Data.Context
         {
             modelBuilder.Entity<Library>().HasKey(x => new { x.GameId, x.UserId });
             modelBuilder.Entity<Cart>().HasKey(x => new { x.GameId, x.UserId });
-            SeedGames(modelBuilder);
-            SeedUsers(modelBuilder);
         }
 
         public DbSet<User> Users { get; set; }
