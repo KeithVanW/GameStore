@@ -8,7 +8,11 @@ namespace GameStore.Data.Profiles
     {
         public GameProfile()
         {
-            CreateMap<Game, GameDto>().ReverseMap();
+            CreateMap<Game, GameDto>();
+
+
+            CreateMap<GameDto, Game>()
+                .ForMember(x => x.GameID, opt => opt.Ignore());
         }
     }
 }

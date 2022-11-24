@@ -33,9 +33,9 @@ namespace GameStore.Data.Entities
         [StringLength(255)]
         public string ImageURL { get; set; }
 
-        public IList<Library> UserGames { get; set; }
+        public IList<Library> UserGames { get; set; } = new List<Library>();
 
 
-        public IList<Cart> Cart { get; set; }
+        public IList<Cart> Cart { get; set; } = new List<Cart>();
     }
 }

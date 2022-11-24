@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace GameStore.Data.Entities
+﻿namespace GameStore.Data.Entities
 {
     public class Library
     {
