@@ -66,18 +66,17 @@ namespace GameStore.Data.Service
             game.GameID = id;
 
             _dataContext.Games.Update(game);
-             
 
             return await _dataContext.SaveChangesAsync();
         }
 
         public async Task<int> DeleteGame(int id)
         {
-            if (!_dataContext.Games.Any(x =>  x.GameID == id))
+            if (!_dataContext.Games.Any(x => x.GameID == id))
             {
                 return -1;
             }
-            
+
             Game game = new Game { GameID = id };
 
             _dataContext.Games.Remove(game);
@@ -93,6 +92,20 @@ namespace GameStore.Data.Service
                 _dataContext.AddRange(games);
                 _dataContext.SaveChanges();
             }
+        }
+
+        public async Task<IEnumerable<GameDto>> Search(string searchString)
+        {
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                var games = await _dataContext.Games.Where(x => x.Name.Contains(searchString)).ToListAsync();
+
+                IEnumerable<GameDto> result = games.Select(x => _mapper.Map<GameDto>(x));
+
+                return result;
+            }
+
+            return await GetAllGames();
         }
     }
 }

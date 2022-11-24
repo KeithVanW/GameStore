@@ -1,4 +1,5 @@
 ﻿using GameStore.Data.Entities;
+using System.Reflection;
 
 namespace GameStore.Data.Service
 {
@@ -13,5 +14,6 @@ namespace GameStore.Data.Service
         Task<int> UpdateGame(int id, GameDto request);
 
         Task<int> DeleteGame(int id);
+        Task<IEnumerable<GameDto>> Search(string name);
     }
 }

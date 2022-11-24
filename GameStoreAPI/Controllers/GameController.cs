@@ -46,6 +46,20 @@ namespace GameStoreAPI.Controllers
             return Ok(result);
         }
 
+        [Route("search/{name}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<GameDto>>> Search([FromRoute] string name)
+        {
+            IEnumerable<GameDto> result = await _gameService.Search(name);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<ActionResult> AddGame(GameDto game)
         {
