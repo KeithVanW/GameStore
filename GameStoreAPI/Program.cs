@@ -59,6 +59,7 @@ void RegisterServices(WebApplicationBuilder builder)
 {
     builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnStr")));
     builder.Services.AddScoped<IGameService, GameService>();
+    builder.Services.AddScoped<ICartService, CartService>();
 
     builder.Services.AddAutoMapper(typeof(Program).Assembly);
     builder.Services.AddAutoMapper(typeof(GameService).Assembly);
