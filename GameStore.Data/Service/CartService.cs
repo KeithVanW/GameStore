@@ -34,6 +34,15 @@ namespace GameStore.Data.Service
 
         public async Task<int> AddGameToCart(string userId, int gameId)
         {
+            if (!_dataContext.Games.Any(x => x.GameID == gameId))
+            {
+                return -1;
+            }
+            if (_dataContext.Carts.Any(x => x.GameId == gameId & x.UserId == userId))
+            {
+                return 0;
+            }
+
             Cart cart = new Cart()
             {
                 UserId = userId,
@@ -44,14 +53,30 @@ namespace GameStore.Data.Service
             return await _dataContext.SaveChangesAsync();
         }
 
-        public Task<int> DeleteCart(string userId)
+        public async Task<int> DeleteCart(string userId)
         {
-            throw new NotImplementedException();
+            if (!_dataContext.Carts.Any(x => x.UserId == userId))
+            {
+                return -1;
+            }
+
+            _dataContext.Carts.RemoveRange(_dataContext.Carts.Where(x => x.UserId == userId));
+            return await _dataContext.SaveChangesAsync();
         }
 
-        public Task<int> DeleteSingleGame(string userId, int gameId)
+        public async Task<int> DeleteSingleGame(string userId, int gameId)
         {
-            throw new NotImplementedException();
+            if (!_dataContext.Carts.Any(x => x.UserId == userId & x.GameId == gameId))
+            {
+                return -1;
+            }
+            Cart cart = new Cart()
+            {
+                GameId = gameId,
+                UserId = userId
+            };
+            _dataContext.Carts.Remove(cart);
+            return await _dataContext.SaveChangesAsync();
         }
 
     }
