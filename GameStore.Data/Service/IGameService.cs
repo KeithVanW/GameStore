@@ -6,11 +6,11 @@ namespace GameStore.Data.Service
     {
         Task<IEnumerable<GameDto>> GetAllGames();
 
-        Task<GameDto?> GetSingleGame(int id);
+        Task<GameDto> GetSingleGame(int id);
 
-        Task<IEnumerable<GameDto>> AddGame(GameDto game);
+        Task<int> AddGame(GameDto game);
 
-        Task<IEnumerable<GameDto>?> UpdateGame(int id, GameDto request);
+        Task<int> UpdateGame(int id, GameDto request);
 
         Task<int> DeleteGame(int id);
     }

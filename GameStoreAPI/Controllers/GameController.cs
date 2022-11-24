@@ -1,12 +1,10 @@
-﻿using GameStore.Data.Context;
-using GameStore.Data.Service;
+﻿using GameStore.Data.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace GameStoreAPI.Controllers
 {
-    [Authorize(Roles = UserRoles.Admin)]
+    //[Authorize(Roles = UserRoles.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class GameController : ControllerBase
@@ -24,11 +22,10 @@ namespace GameStoreAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GameDto>> GetSingleGame(int id)
         {
-            GameDto? result = await _gameService.GetSingleGame(id);
+            GameDto result = await _gameService.GetSingleGame(id);
 
             if (result == null)
             {
-                _logger.LogWarning("Game could not be found, returned 'null'");
                 return NotFound();
             }
 
@@ -37,46 +34,60 @@ namespace GameStoreAPI.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IEnumerable<GameDto>> GetAllGames()
+        public async Task<ActionResult<IEnumerable<GameDto>>> GetAllGames()
         {
             IEnumerable<GameDto> result = await _gameService.GetAllGames();
 
-            return result;
+            if (result == null) 
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
 
         [HttpPost]
-        public async Task<IEnumerable<GameDto>> AddGame(GameDto game)
+        public async Task<ActionResult> AddGame(GameDto game)
         {
-            IEnumerable<GameDto> result = await _gameService.AddGame(game);
+            int result = await _gameService.AddGame(game);
 
-            return result;
+            if (result == 0)
+            {
+                return BadRequest();
+            }
+            return Ok();
         }
 
         [HttpPut("{id}")]
-        public async Task<IEnumerable<GameDto>> UpdateGame(int id, GameDto request)
+        public async Task<ActionResult> UpdateGame(int id, GameDto request)
         {
-            IEnumerable<GameDto>? result = await _gameService.UpdateGame(id, request);
-            if (result == null)
-                return null;
+            int result = await _gameService.UpdateGame(id, request);
 
-            return result;
+            if (result == 0)
+            {
+                return BadRequest();
+            }
+            if (result == -1)
+            {
+                return NotFound();
+            }
+            return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteGame(int id)
         {
             int result = await _gameService.DeleteGame(id);
-            if (result == 1)
-                return Ok("Product deleted");
 
+            if (result == 0)
+            {
+                return BadRequest();
+            }
             if (result == -1)
             {
                 return NotFound();
             }
-            else
-            {
-                return BadRequest("Something went boo boo");
-            }
+            return Ok();
         }
     }
 }
