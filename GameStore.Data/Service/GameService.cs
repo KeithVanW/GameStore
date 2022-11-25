@@ -36,7 +36,7 @@ namespace GameStore.Data.Service
         {
             List<Game> games = await _dataContext.Games.ToListAsync();
 
-            if (games == null)
+            if (games.Count() == 0)
             {
                 return null;
             }

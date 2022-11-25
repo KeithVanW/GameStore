@@ -2,7 +2,6 @@
 using GameStore.Data.Context;
 using GameStore.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography.X509Certificates;
 
 namespace GameStore.Data.Service
 {
@@ -22,7 +21,7 @@ namespace GameStore.Data.Service
                 .Include(cart => cart.Game)
                 .Where(x => x.UserId.Contains(userId))
                 .ToListAsync();
-            if (games == null)
+            if (games.Count() == 0)
             {
                 return null;
             }
