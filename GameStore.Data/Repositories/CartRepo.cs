@@ -18,63 +18,31 @@ namespace GameStore.Data.Repositories
                 .Include(cart => cart.Game)
                 .Where(x => x.UserId.Contains(userId))
                 .ToListAsync();
-            
-            if (!games.Any())
-            {
-                return null;
-            }
-
-            //IEnumerable<GameEntity> result = games.Select(x => _mapper.Map<GameDto>(x.Game));
 
             return games;
         }
 
-        public async Task<int> AddGameToCart(string userId, int gameId)
+        public async Task<int> AddGameToCart(CartEntity request)
         {
-            if (!_dataContext.Games.Any(x => x.GameID == gameId))
-            {
-                return -1;
-            }
-            if (_dataContext.Carts.Any(x => x.GameId == gameId & x.UserId == userId))
-            {
-                return 0;
-            }
-
-            CartEntity cart = new CartEntity()
-            {
-                UserId = userId,
-                GameId = gameId
-            };
-
-            _dataContext.Carts.Add(cart);
+            _dataContext.Carts.Add(request);
             return await _dataContext.SaveChangesAsync();
         }
 
         public async Task<int> DeleteCart(string userId)
         {
-            if (!_dataContext.Carts.Any(x => x.UserId == userId))
-            {
-                return -1;
-            }
-
             _dataContext.Carts.RemoveRange(_dataContext.Carts.Where(x => x.UserId == userId));
             return await _dataContext.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteSingleGame(string userId, int gameId)
+        public async Task<int> DeleteSingleGame(CartEntity request)
         {
-            if (!_dataContext.Carts.Any(x => x.UserId == userId & x.GameId == gameId))
-            {
-                return -1;
-            }
-            CartEntity cart = new CartEntity()
-            {
-                GameId = gameId,
-                UserId = userId
-            };
-            _dataContext.Carts.Remove(cart);
+            _dataContext.Carts.Remove(request);
             return await _dataContext.SaveChangesAsync();
         }
 
+        public async Task<Boolean> IsGameInCart(string userId ,int id)
+        {
+            return await _dataContext.Carts.AnyAsync(x => x.GameId == id & x.UserId == userId);
+        }
     }
 }

@@ -5,7 +5,8 @@ namespace GameStore.Data.Repositories;
 public interface ILibraryRepo
 {
     Task<IEnumerable<LibraryEntity>> GetGamesByUserIdAsync(string userId);
-    Task<int> AddGamesToLibrary(string userId, int[] gameId);
+    Task<int> AddGamesToLibrary(IEnumerable<LibraryEntity> entities);
     Task<int> DeleteLibrary(string userId);
-    Task<int> DeleteSingleGame(string userId, int gameId);
+    Task<int> DeleteSingleGame(LibraryEntity request);
+    Task<bool> IsGameInLibrary(string userId, int gameId);
 }

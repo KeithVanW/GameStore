@@ -1,4 +1,5 @@
 ﻿using GameStore.Business.Models;
+using GameStore.Business.Services;
 using GameStore.Data.Entities;
 using GameStore.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -12,12 +13,12 @@ namespace GameStoreAPI.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
-        private readonly ICartRepo _cartService;
+        private readonly ICartService _cartService;
         private readonly ILogger<CartController> _logger;
         private readonly UserManager<UserEntity> _userManager;
 
         public CartController(
-            ICartRepo cartService,
+            ICartService cartService,
             ILogger<CartController> logger,
             UserManager<UserEntity> userManager)
         {
@@ -27,7 +28,7 @@ namespace GameStoreAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GameModel>>> GetAllGames()
+        public async Task<ActionResult<CartOverviewModel>> GetAllGames()
         {
             string userId = await GetUserIdAsync();
 
@@ -55,7 +56,7 @@ namespace GameStoreAPI.Controllers
             {
                 return NotFound();
             }
-            return Ok();
+            return Created("Product added", null);
         }
 
         [HttpDelete]
