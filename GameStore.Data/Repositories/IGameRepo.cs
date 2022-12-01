@@ -10,4 +10,5 @@ public interface IGameRepo
     Task<int> UpdateGame(int id, GameEntity request);
     Task<int> DeleteGame(int id);
     Task<IEnumerable<GameEntity>> Search(string searchString);
+    Task<Boolean> DoesGameExist(int id);
 }

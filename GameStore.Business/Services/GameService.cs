@@ -22,7 +22,7 @@ namespace GameStore.Business.Services
             GameEntity entity = await _repo.GetSingleGame(id);
             GameModel model = _mapper.Map<GameModel>(entity);
 
-            model.PriceInDollar = model.Price * .95;
+            //model.PriceInDollar = model.Price * .95;
 
             // Additional calculations can be performed here. 
             // E.g. Convert price to $ and Lira

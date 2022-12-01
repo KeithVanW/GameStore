@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
 using GameStore.Data.Repositories;
+using GameStore.Business.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,8 +60,12 @@ void RegisterServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<ICartRepo, CartRepo>();
     builder.Services.AddScoped<ILibraryRepo, LibraryRepo>();
 
+    builder.Services.AddScoped<IGameService, GameService>();
+    builder.Services.AddScoped<ICartService, CartService>();
+    builder.Services.AddScoped<ILibraryService, LibraryService>();
+
     builder.Services.AddAutoMapper(typeof(Program).Assembly);
-    builder.Services.AddAutoMapper(typeof(GameRepo).Assembly);
+    builder.Services.AddAutoMapper(typeof(GameService).Assembly);
 }
 
 void ConfigureJwt(WebApplicationBuilder builder)

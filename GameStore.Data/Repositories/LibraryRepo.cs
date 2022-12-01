@@ -18,66 +18,31 @@ namespace GameStore.Data.Repositories
                 .Include(library => library.Game)
                 .Where(x => x.UserId.Contains(userId))
                 .ToListAsync();
-            
-            if (!games.Any())
-            {
-                return null;
-            }
-
-            //IEnumerable<GameDto> result = games.Select(x => _mapper.Map<GameDto>(x.Game));
 
             return games;
         }
 
-        public async Task<int> AddGamesToLibrary(string userId, int[] gameId)
+        public async Task<int> AddGamesToLibrary(IEnumerable<LibraryEntity> entities)
         {
-            List<int> gameIds = gameId.ToList();
-            IList<LibraryEntity> librariesToAdd = new List<LibraryEntity>();
-            foreach (int game in gameIds)
-            {
-                if (!_dataContext.Games.Any(x => x.GameID == game))
-                {
-                }
-                else if (_dataContext.Libraries.Any(x => x.GameId == game & x.UserId == userId))
-                {
-                }
-                else
-                {
-                    librariesToAdd.Add(new LibraryEntity()
-                    {
-                        GameId = game, UserId = userId
-                    });
-                }
-            }
-
-            _dataContext.Libraries.AddRange(librariesToAdd);
+            _dataContext.Libraries.AddRange(entities);
             return await _dataContext.SaveChangesAsync();
         }
 
         public async Task<int> DeleteLibrary(string userId)
         {
-            if (!_dataContext.Libraries.Any(x => x.UserId == userId))
-            {
-                return -1;
-            }
-
             _dataContext.Libraries.RemoveRange(_dataContext.Libraries.Where(x => x.UserId == userId));
             return await _dataContext.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteSingleGame(string userId, int gameId)
+        public async Task<int> DeleteSingleGame(LibraryEntity request)
         {
-            if (!_dataContext.Libraries.Any(x => x.UserId == userId & x.GameId == gameId))
-            {
-                return -1;
-            }
-            LibraryEntity library = new LibraryEntity()
-            {
-                GameId = gameId,
-                UserId = userId
-            };
-            _dataContext.Libraries.Remove(library);
+            _dataContext.Libraries.Remove(request);
             return await _dataContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsGameInLibrary(string userId, int gameId)
+        {
+            return await _dataContext.Libraries.AnyAsync(x => x.GameId == gameId & x.UserId == userId);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using GameStore.Business.Models;
+using GameStore.Business.Services;
 using GameStore.Data.Entities;
 using GameStore.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -12,12 +13,12 @@ namespace GameStoreAPI.Controllers
     [ApiController]
     public class LibraryController: ControllerBase
     {
-        private readonly ILibraryRepo _libraryService;
+        private readonly ILibraryService _libraryService;
         private readonly ILogger<LibraryController> _logger;
         private readonly UserManager<UserEntity> _userManager;
 
         public LibraryController(
-            ILibraryRepo libraryService,
+            ILibraryService libraryService,
             ILogger<LibraryController> logger,
             UserManager<UserEntity> userManager)
         {
@@ -49,6 +50,10 @@ namespace GameStoreAPI.Controllers
             if (result == 0)
             {
                 return BadRequest();
+            }
+            if (result == -1)
+            {
+                return NotFound();
             }
             return Ok();
         }

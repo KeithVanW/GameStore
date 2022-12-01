@@ -85,5 +85,10 @@ namespace GameStore.Data.Repositories
 
             return await GetAllGames();
         }
+
+        public async Task<Boolean> DoesGameExist(int id)
+        {
+            return await _dataContext.Games.AnyAsync(x => x.GameID == id);
+        }
     }
 }
