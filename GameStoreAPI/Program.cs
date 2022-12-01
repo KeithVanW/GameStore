@@ -1,12 +1,12 @@
 using GameStore.Data.Context;
 using GameStore.Data.Entities;
-using GameStore.Data.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
+using GameStore.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,19 +55,19 @@ void ConfigureLogger(WebApplicationBuilder builder)
 void RegisterServices(WebApplicationBuilder builder)
 {
     builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnStr")));
-    builder.Services.AddScoped<IGameService, GameService>();
-    builder.Services.AddScoped<ICartService, CartService>();
-    builder.Services.AddScoped<ILibraryService, LibraryService>();
+    builder.Services.AddScoped<IGameRepo, GameRepo>();
+    builder.Services.AddScoped<ICartRepo, CartRepo>();
+    builder.Services.AddScoped<ILibraryRepo, LibraryRepo>();
 
     builder.Services.AddAutoMapper(typeof(Program).Assembly);
-    builder.Services.AddAutoMapper(typeof(GameService).Assembly);
+    builder.Services.AddAutoMapper(typeof(GameRepo).Assembly);
 }
 
 void ConfigureJwt(WebApplicationBuilder builder)
 {
     // For Identity
     builder.Services
-        .AddIdentity<User, IdentityRole>()
+        .AddIdentity<UserEntity, IdentityRole>()
         .AddEntityFrameworkStores<DataContext>()
         .AddDefaultTokenProviders();
 

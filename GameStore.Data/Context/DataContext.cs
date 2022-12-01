@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GameStore.Data.Context
 {
-    public class DataContext : IdentityDbContext<User>
+    public class DataContext : IdentityDbContext<UserEntity>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -16,12 +16,12 @@ namespace GameStore.Data.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Library>().HasKey(x => new { x.GameId, x.UserId });
-            modelBuilder.Entity<Cart>().HasKey(x => new { x.GameId, x.UserId });
+            modelBuilder.Entity<LibraryEntity>().HasKey(x => new { x.GameId, x.UserId });
+            modelBuilder.Entity<CartEntity>().HasKey(x => new { x.GameId, x.UserId });
         }
 
-        public DbSet<Game> Games { get; set; }
-        public DbSet<Cart> Carts { get; set; }
-        public DbSet<Library> Libraries { get; set; }
+        public DbSet<GameEntity> Games { get; set; }
+        public DbSet<CartEntity> Carts { get; set; }
+        public DbSet<LibraryEntity> Libraries { get; set; }
     }
 }

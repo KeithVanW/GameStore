@@ -1,5 +1,6 @@
-﻿using GameStore.Data.Entities;
-using GameStore.Data.Service;
+﻿using GameStore.Business.Models;
+using GameStore.Data.Entities;
+using GameStore.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,14 +12,14 @@ namespace GameStoreAPI.Controllers
     [ApiController]
     public class LibraryController: ControllerBase
     {
-        private readonly ILibraryService _libraryService;
+        private readonly ILibraryRepo _libraryService;
         private readonly ILogger<LibraryController> _logger;
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<UserEntity> _userManager;
 
         public LibraryController(
-            ILibraryService libraryService,
+            ILibraryRepo libraryService,
             ILogger<LibraryController> logger,
-            UserManager<User> userManager)
+            UserManager<UserEntity> userManager)
         {
             _libraryService = libraryService;
             _logger = logger;
@@ -26,12 +27,12 @@ namespace GameStoreAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GameDto>>> GetAllGames()
+        public async Task<ActionResult<IEnumerable<GameModel>>> GetAllGames()
         {
 
             string userId = await GetUserIdAsync();
 
-            IEnumerable<GameDto> result = await _libraryService.GetGamesByUserIdAsync(userId);
+            IEnumerable<GameModel> result = await _libraryService.GetGamesByUserIdAsync(userId);
             if (result == null)
             {
                 return NotFound("No games in library");
@@ -87,7 +88,7 @@ namespace GameStoreAPI.Controllers
         private async Task<string> GetUserIdAsync()
         {
             string userName = User.Identity.Name;
-            User user = await _userManager.FindByNameAsync(userName);
+            UserEntity user = await _userManager.FindByNameAsync(userName);
             if (user == null)
             {
                 return null;

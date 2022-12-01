@@ -3,21 +3,21 @@ using GameStore.Data.Context;
 using GameStore.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace GameStore.Data.Service
+namespace GameStore.Data.Repositories
 {
-    public class CartService : ICartService
+    public class CartRepo : ICartRepo
     {
         private readonly DataContext _dataContext;
         private readonly IMapper _mapper;
 
-        public CartService(DataContext dataContext, IMapper mapper)
+        public CartRepo(DataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
             _mapper = mapper;
         }
         public async Task<IEnumerable<GameDto>> GetGamesByUserIdAsync(string userId)
         {
-            IEnumerable<Cart> games = await _dataContext.Carts
+            IEnumerable<CartEntity> games = await _dataContext.Carts
                 .Include(cart => cart.Game)
                 .Where(x => x.UserId.Contains(userId))
                 .ToListAsync();
@@ -42,7 +42,7 @@ namespace GameStore.Data.Service
                 return 0;
             }
 
-            Cart cart = new Cart()
+            CartEntity cart = new CartEntity()
             {
                 UserId = userId,
                 GameId = gameId
@@ -69,7 +69,7 @@ namespace GameStore.Data.Service
             {
                 return -1;
             }
-            Cart cart = new Cart()
+            CartEntity cart = new CartEntity()
             {
                 GameId = gameId,
                 UserId = userId

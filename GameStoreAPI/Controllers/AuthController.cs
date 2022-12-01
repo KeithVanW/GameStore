@@ -1,12 +1,12 @@
 ﻿using GameStore.Data.Context;
 using GameStore.Data.Entities;
-using GameStoreAPI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using GameStore.Business.Models;
 
 namespace GameStoreAPI.Controllers
 {
@@ -14,12 +14,12 @@ namespace GameStoreAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<UserEntity> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
 
         public AuthController(
-            UserManager<User> userManager,
+            UserManager<UserEntity> userManager,
             RoleManager<IdentityRole> roleManager,
             IConfiguration configuration)
         {
@@ -67,7 +67,7 @@ namespace GameStoreAPI.Controllers
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
 
-            User user = new()
+            UserEntity user = new()
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
@@ -92,7 +92,7 @@ namespace GameStoreAPI.Controllers
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
 
-            User user = new()
+            UserEntity user = new()
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),

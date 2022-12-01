@@ -1,6 +1,6 @@
-﻿namespace GameStore.Data.Service
+﻿namespace GameStore.Business.Models
 {
-    public class GameDto
+    public class GameModel
     {
         public int GameID { get; set; }
         public string Name { get; set; } = string.Empty;

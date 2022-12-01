@@ -3,7 +3,7 @@ using FluentAssertions;
 using GameStore.Data.Context;
 using GameStore.Data.Entities;
 using GameStore.Data.Profiles;
-using GameStore.Data.Service;
+using GameStore.Data.Repositories;
 using Moq;
 
 namespace GameStore.Data.Tests.Service
@@ -31,7 +31,7 @@ namespace GameStore.Data.Tests.Service
             var configuration = new MapperConfiguration(cfg => cfg.AddProfile(myProfile));
             IMapper mapper = new Mapper(configuration);
 
-            GameService service = new GameService(context.Object, mapper);
+            GameRepo service = new GameRepo(context.Object, mapper);
 
             // Act
             GameDto result = await service.GetSingleGame(1);

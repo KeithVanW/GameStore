@@ -2,7 +2,7 @@
 
 namespace GameStore.Data.Entities
 {
-    public class Game
+    public class GameEntity
     {
         [Key]
         public int GameID { get; set; }
@@ -33,9 +33,9 @@ namespace GameStore.Data.Entities
         [StringLength(255)]
         public string ImageURL { get; set; }
 
-        public IList<Library> UserGames { get; set; } = new List<Library>();
+        public IList<LibraryEntity> UserGames { get; set; } = new List<LibraryEntity>();
 
 
-        public IList<Cart> Cart { get; set; } = new List<Cart>();
+        public IList<CartEntity> Cart { get; set; } = new List<CartEntity>();
     }
 }

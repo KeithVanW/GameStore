@@ -1,4 +1,4 @@
-﻿namespace GameStoreAPI.Models
+﻿namespace GameStore.Business.Models
 {
     public class Response
     {

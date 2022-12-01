@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using GameStore.Data.Entities;
-using GameStore.Data.Service;
 
 namespace GameStore.Data.Profiles
 {
@@ -8,10 +7,10 @@ namespace GameStore.Data.Profiles
     {
         public GameProfile()
         {
-            CreateMap<Game, GameDto>();
+            CreateMap<GameEntity, GameDto>();
 
 
-            CreateMap<GameDto, Game>()
+            CreateMap<GameDto, GameEntity>()
                 .ForMember(x => x.GameID, opt => opt.Ignore());
         }
     }
