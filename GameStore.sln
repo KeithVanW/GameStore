@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStoreAPI", "GameStoreAP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.Data", "GameStore.Data\GameStore.Data.csproj", "{B9177E67-31EB-4172-9C31-A335ED6C4931}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.Data.Tests", "GameStore.Data.Tests\GameStore.Data.Tests.csproj", "{19597D2A-3C76-4048-B742-376DEBD2CE98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.Business.Tests", "GameStore.Data.Tests\GameStore.Business.Tests.csproj", "{19597D2A-3C76-4048-B742-376DEBD2CE98}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.Business", "GameStore.Business\GameStore.Business.csproj", "{EE2FCBA8-8B24-444D-AC24-9680C3FC68CE}"
 EndProject

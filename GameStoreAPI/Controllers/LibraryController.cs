@@ -32,7 +32,7 @@ namespace GameStoreAPI.Controllers
 
             string userId = await GetUserIdAsync();
 
-            IEnumerable<GameModel> result = await _libraryService.GetGamesByUserIdAsync(userId);
+            var result = await _libraryService.GetGamesByUserIdAsync(userId);
             if (result == null)
             {
                 return NotFound("No games in library");
