@@ -1,16 +1,17 @@
 ﻿using AutoMapper;
+using GameStore.Business.Models;
 using GameStore.Data.Entities;
 
-namespace GameStore.Data.Profiles
+namespace GameStore.Business.Profiles
 {
     public class GameProfile : Profile
     {
         public GameProfile()
         {
-            CreateMap<GameEntity, GameDto>();
+            CreateMap<GameEntity, GameModel>();
 
 
-            CreateMap<GameDto, GameEntity>()
+            CreateMap<GameModel, GameEntity>()
                 .ForMember(x => x.GameID, opt => opt.Ignore());
         }
     }

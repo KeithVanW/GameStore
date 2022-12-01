@@ -1,13 +1,11 @@
-﻿namespace GameStore.Data.Repositories
+﻿using GameStore.Data.Entities;
+
+namespace GameStore.Data.Repositories;
+
+public interface ILibraryRepo
 {
-    public interface ILibraryRepo
-    {
-        Task<IEnumerable<GameDto>> GetGamesByUserIdAsync(string userId);
-
-        Task<int> AddGamesToLibrary(string userId, int[] gameId);
-
-        Task<int> DeleteSingleGame(string userId, int gameId);
-
-        Task<int> DeleteLibrary(string userId);
-    }
+    Task<IEnumerable<LibraryEntity>> GetGamesByUserIdAsync(string userId);
+    Task<int> AddGamesToLibrary(string userId, int[] gameId);
+    Task<int> DeleteLibrary(string userId);
+    Task<int> DeleteSingleGame(string userId, int gameId);
 }

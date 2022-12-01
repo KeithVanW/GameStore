@@ -10,7 +10,7 @@ namespace GameStoreAPI.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class CartController: ControllerBase
+    public class CartController : ControllerBase
     {
         private readonly ICartRepo _cartService;
         private readonly ILogger<CartController> _logger;
@@ -29,10 +29,9 @@ namespace GameStoreAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GameModel>>> GetAllGames()
         {
-            
             string userId = await GetUserIdAsync();
 
-            IEnumerable<GameModel> result = await _cartService.GetGamesByUserIdAsync(userId);
+            var result = await _cartService.GetGamesByUserIdAsync(userId);
             if (result == null)
             {
                 return NotFound("No games in cart");
@@ -46,10 +45,12 @@ namespace GameStoreAPI.Controllers
         {
             string userId = await GetUserIdAsync();
             int result = await _cartService.AddGameToCart(userId, gameId);
+
             if (result == 0)
             {
                 return BadRequest();
             }
+
             if (result == -1)
             {
                 return NotFound();
@@ -62,26 +63,30 @@ namespace GameStoreAPI.Controllers
         {
             string userId = await GetUserIdAsync();
             int result = await _cartService.DeleteCart(userId);
+
             if (result == 0)
             {
                 return BadRequest();
             }
+
             if (result == -1)
             {
                 return NotFound();
             }
             return Ok();
         }
-        
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteSingleGameFromCart(int id)
         {
             string userId = await GetUserIdAsync();
             int result = await _cartService.DeleteSingleGame(userId, id);
+
             if (result == 0)
             {
                 return BadRequest();
             }
+
             if (result == -1)
             {
                 return NotFound();

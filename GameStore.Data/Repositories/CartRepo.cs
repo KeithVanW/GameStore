@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using GameStore.Data.Context;
+﻿using GameStore.Data.Context;
 using GameStore.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,27 +7,26 @@ namespace GameStore.Data.Repositories
     public class CartRepo : ICartRepo
     {
         private readonly DataContext _dataContext;
-        private readonly IMapper _mapper;
 
-        public CartRepo(DataContext dataContext, IMapper mapper)
+        public CartRepo(DataContext dataContext)
         {
             _dataContext = dataContext;
-            _mapper = mapper;
         }
-        public async Task<IEnumerable<GameDto>> GetGamesByUserIdAsync(string userId)
+        public async Task<IEnumerable<CartEntity>> GetGamesByUserIdAsync(string userId)
         {
             IEnumerable<CartEntity> games = await _dataContext.Carts
                 .Include(cart => cart.Game)
                 .Where(x => x.UserId.Contains(userId))
                 .ToListAsync();
-            if (games.Count() == 0)
+            
+            if (!games.Any())
             {
                 return null;
             }
 
-            IEnumerable<GameDto> result = games.Select(x => _mapper.Map<GameDto>(x.Game));
+            //IEnumerable<GameEntity> result = games.Select(x => _mapper.Map<GameDto>(x.Game));
 
-            return result;
+            return games;
         }
 
         public async Task<int> AddGameToCart(string userId, int gameId)
