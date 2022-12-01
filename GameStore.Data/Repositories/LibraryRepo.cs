@@ -3,24 +3,25 @@ using GameStore.Data.Context;
 using GameStore.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace GameStore.Data.Service
+namespace GameStore.Data.Repositories
 {
-    public class LibraryService: ILibraryService
+    public class LibraryRepo: ILibraryRepo
     {
         private readonly DataContext _dataContext;
         private readonly IMapper _mapper;
 
-        public LibraryService(DataContext dataContext, IMapper mapper)
+        public LibraryRepo(DataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
             _mapper = mapper;
         }
         public async Task<IEnumerable<GameDto>> GetGamesByUserIdAsync(string userId)
         {
-            IEnumerable<Library> games = await _dataContext.Libraries
+            IEnumerable<LibraryEntity> games = await _dataContext.Libraries
                 .Include(library => library.Game)
                 .Where(x => x.UserId.Contains(userId))
                 .ToListAsync();
+            
             if (games.Count() == 0)
             {
                 return null;
@@ -34,7 +35,7 @@ namespace GameStore.Data.Service
         public async Task<int> AddGamesToLibrary(string userId, int[] gameId)
         {
             List<int> gameIds = gameId.ToList();
-            IList<Library> librariesToAdd = new List<Library>();
+            IList<LibraryEntity> librariesToAdd = new List<LibraryEntity>();
             foreach (int game in gameIds)
             {
                 if (!_dataContext.Games.Any(x => x.GameID == game))
@@ -45,7 +46,7 @@ namespace GameStore.Data.Service
                 }
                 else
                 {
-                    librariesToAdd.Add(new Library()
+                    librariesToAdd.Add(new LibraryEntity()
                     {
                         GameId = game, UserId = userId
                     });
@@ -73,7 +74,7 @@ namespace GameStore.Data.Service
             {
                 return -1;
             }
-            Library library = new Library()
+            LibraryEntity library = new LibraryEntity()
             {
                 GameId = gameId,
                 UserId = userId

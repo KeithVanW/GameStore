@@ -1,6 +1,6 @@
-﻿namespace GameStore.Data.Service
+﻿namespace GameStore.Data.Repositories
 {
-    public interface ICartService
+    public interface ICartRepo
     {
         Task<IEnumerable<GameDto>> GetGamesByUserIdAsync(string userId);
 

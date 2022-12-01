@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameStore.Data.Service
+﻿namespace GameStore.Data.Repositories
 {
-    public interface ILibraryService
+    public interface ILibraryRepo
     {
         Task<IEnumerable<GameDto>> GetGamesByUserIdAsync(string userId);
 

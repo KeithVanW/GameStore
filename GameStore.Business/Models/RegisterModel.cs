@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GameStoreAPI.Models
+namespace GameStore.Business.Models
 {
     public class RegisterModel
     {

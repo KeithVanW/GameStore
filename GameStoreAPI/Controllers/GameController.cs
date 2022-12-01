@@ -1,4 +1,6 @@
-﻿using GameStore.Data.Service;
+﻿using GameStore.Business.Models;
+using GameStore.Business.Services;
+using GameStore.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,9 +22,9 @@ namespace GameStoreAPI.Controllers
 
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<ActionResult<GameDto>> GetSingleGame(int id)
+        public async Task<ActionResult<GameModel>> GetSingleGame(int id)
         {
-            GameDto result = await _gameService.GetSingleGame(id);
+            GameModel result = await _gameService.GetSingleGame(id);
 
             if (result == null)
             {
@@ -34,9 +36,9 @@ namespace GameStoreAPI.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GameDto>>> GetAllGames()
+        public async Task<ActionResult<IEnumerable<GameModel>>> GetAllGames()
         {
-            IEnumerable<GameDto> result = await _gameService.GetAllGames();
+            IEnumerable<GameModel> result = await _gameService.GetAllGames();
 
             if (result == null) 
             {
@@ -48,9 +50,9 @@ namespace GameStoreAPI.Controllers
 
         [Route("search/{name}")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GameDto>>> Search([FromRoute] string name)
+        public async Task<ActionResult<IEnumerable<GameModel>>> Search([FromRoute] string name)
         {
-            IEnumerable<GameDto> result = await _gameService.Search(name);
+            IEnumerable<GameModel> result = await _gameService.Search(name);
 
             if (result == null)
             {
@@ -61,7 +63,7 @@ namespace GameStoreAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddGame(GameDto game)
+        public async Task<ActionResult> AddGame(GameModel game)
         {
             int result = await _gameService.AddGame(game);
 
@@ -73,7 +75,7 @@ namespace GameStoreAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateGame(int id, GameDto request)
+        public async Task<ActionResult> UpdateGame(int id, GameModel request)
         {
             int result = await _gameService.UpdateGame(id, request);
 
