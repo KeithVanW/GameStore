@@ -62,6 +62,20 @@ namespace GameStoreAPI.Controllers
             return Ok(result);
         }
 
+        [Route("genre/{genre}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<GameModel>>> SearchGenre([FromRoute] string genre)
+        {
+            IEnumerable<GameModel> result = await _gameService.SearchGenre(genre);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<ActionResult> AddGame(GameModel game)
         {
@@ -71,7 +85,7 @@ namespace GameStoreAPI.Controllers
             {
                 return BadRequest();
             }
-            return Created("Api/Game", game.Name);
+            return Created("Game created", null);
         }
 
         [HttpPut("{id}")]

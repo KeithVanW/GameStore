@@ -28,12 +28,12 @@ namespace GameStoreAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GameModel>>> GetAllGames()
+        public async Task<ActionResult<LibraryOverviewModel>> GetAllGames()
         {
 
             string userId = await GetUserIdAsync();
 
-            var result = await _libraryService.GetGamesByUserIdAsync(userId);
+            LibraryOverviewModel result = await _libraryService.GetGamesByUserIdAsync(userId);
             if (result == null)
             {
                 return NotFound("No games in library");
@@ -55,7 +55,7 @@ namespace GameStoreAPI.Controllers
             {
                 return NotFound();
             }
-            return Ok();
+            return Created("Product added", null);
         }
 
         [HttpDelete]
