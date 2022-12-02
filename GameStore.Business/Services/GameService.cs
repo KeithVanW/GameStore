@@ -75,5 +75,13 @@ namespace GameStore.Business.Services
 
            return models;
         }
+
+        public async Task<IEnumerable<GameModel>> SearchGenre(string genre)
+        {
+            IEnumerable<GameEntity> entities = await _repo.SearchGenre(genre);
+            IEnumerable<GameModel> models = entities.Select(x => _mapper.Map<GameModel>(x));
+
+            return models;
+        }
     }
 }

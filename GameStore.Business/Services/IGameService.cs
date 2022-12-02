@@ -10,4 +10,5 @@ public interface IGameService
     Task<int> UpdateGame(int id, GameModel game);
     Task<int> DeleteGame(int id);
     Task<IEnumerable<GameModel>> Search(string name);
+    Task<IEnumerable<GameModel>> SearchGenre(string genre);
 }
