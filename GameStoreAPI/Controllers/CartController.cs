@@ -56,7 +56,7 @@ namespace GameStoreAPI.Controllers
             {
                 return NotFound();
             }
-            return Created("Product added", null);
+            return Ok();
         }
 
         [HttpDelete]
