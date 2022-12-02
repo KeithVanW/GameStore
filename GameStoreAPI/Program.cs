@@ -1,13 +1,13 @@
+using GameStore.Business.Services;
 using GameStore.Data.Context;
 using GameStore.Data.Entities;
+using GameStore.Data.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
-using GameStore.Data.Repositories;
-using GameStore.Business.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +16,8 @@ RegisterServices(builder);
 ConfigureLogger(builder);
 
 ConfigureJwt(builder);
+
+UseCORS(builder);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -29,6 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("webClient");
 app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
@@ -98,4 +101,15 @@ void ConfigureJwt(WebApplicationBuilder builder)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]!))
         };
     });
+}
+
+void UseCORS(WebApplicationBuilder builder)
+{
+    builder.Services.AddCors(x => x
+            .AddPolicy(name: "webClient", policy =>
+            {
+                policy.WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            }));
 }

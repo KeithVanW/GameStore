@@ -6,16 +6,16 @@
     "Genre": "Strategy",
     "Price": 19.99,
     "Description": "Among Us is a party game of teamwork and betrayal. Crewmates work together to complete tasks before one or more Impostors can kill everyone aboard.",
-    "ImageURL": "test.jpg"
+    "ImageURL": "https://images.hdqwalls.com/download/among-us-4k-up-1920x1080.jpg"
   },
   {
     "Name": "Apex Legends",
     "Developer": "Respawn Entertainment",
     "Platform": "PC",
-    "Genre": "Battle Royal",
+    "Genre": "Battle Royal / Online Shooter",
     "Price": 0,
     "Description": "Apex Legends is a free-to-play hero shooter game where legendary competitors battle for glory, fame, and fortune on the fringes of the Frontier.",
-    "ImageURL": "test.jpg"
+    "ImageURL": "https://images.hdqwalls.com/download/apex-legends-meltdown-5k-lp-1920x1080.jpg"
   },
   {
     "Name": "Battlefield 2042",
@@ -24,6 +24,114 @@
     "Genre": "FPS / Online Shooter",
     "Price": 59.99,
     "Description": "Call the shots in Season 3: Escalation. Battlefield™ 2042 is a first-person shooter that marks the return to the iconic all-out warfare of the franchise. ",
-    "ImageURL": "test.jpg"
+    "ImageURL": "https://images.hdqwalls.com/download/battlefield-2042-plane-4k-px-1920x1080.jpg"
+  },
+  {
+    "Name": "Dead Space 2",
+    "Developer": "Visceral Games",
+    "Platform": "PC",
+    "Genre": "Action / Adventure",
+    "Price": 19.99,
+    "Description": "In Dead Space 2, you join Isaac Clarke, the Systems Engineer from Dead Space, as he wakes up three years after the horrific events on the USG Ishimura.",
+    "ImageURL": "https://wallpaperaccess.com/full/749642.jpg"
+  },
+  {
+    "Name": "The Callisto Protocol",
+    "Developer": "Striking Distance Studios",
+    "Platform": "PS5",
+    "Genre": "Survival / Horror / Shooter / Adventure",
+    "Price": 59.99,
+    "Description": "The Callisto Protocol is a next-generation take on survival horror from the mind of Glen Schofield. The game immerses players in a pulse-pounding story where unspeakable horrors lurk around every corner.",
+    "ImageURL": "https://insider-gaming.com/wp-content/uploads/2022/11/callisto-protocol-leaks-e1669797394358.jpg"
+  },
+  {
+    "Name": "Tetris",
+    "Developer": "Sega",
+    "Platform": "Game Boy",
+    "Genre": "Strategy / Puzzle",
+    "Price": 9.99,
+    "Description": "Tetris is a tile-matching puzzle game, developed in the Soviet Union in 1984. The game has a simple goal of destroying lines of blocks before it reaches the top.",
+    "ImageURL": "https://wallpapercave.com/wp/wp2675338.jpg"
+  },
+  {
+    "Name": "Super Mario Land 2: 6 Golden Coins",
+    "Developer": "Nintendo",
+    "Platform": "Game Boy",
+    "Genre": "Platformer",
+    "Price": 3.99,
+    "Description": "Super Mario Land 2 follows the events of Super Mario Land. While Mario was away in Sarasaland, a jealous childhood acquaintance named Wario puts an evil spell over Mario Land, brainwashing its inhabitants into believing Wario is their master.",
+    "ImageURL": "https://wallpapercave.com/wp/wp10770171.png"
+  },
+  {
+    "Name": "Doom",
+    "Developer": "id Software",
+    "Platform": "PC",
+    "Genre": "FPS / Action / Adventure",
+    "Price": 19.99,
+    "Description": "As the lone DOOM Marine, you’ve been activated to do one thing – kill them all.",
+    "ImageURL": "https://images.hdqwalls.com/download/doom-reverse-9g-1920x1080.jpg"
+  },
+  {
+    "Name": "Microsoft Flight Simulator 40th Anniversary Edition",
+    "Developer": "Asobo Studio",
+    "Platform": "PC",
+    "Genre": "Simulation",
+    "Price": 69.99,
+    "Description": "From light planes to wide-body jets, test your piloting skills and experience the challenges of flying at night, real-time atmospheric simulation, and live weather in a dynamic and living world. ",
+    "ImageURL": "https://images.hdqwalls.com/download/microsoft-flight-simulator-2022-04-1920x1080.jpg"
+  },
+  {
+    "Name": "Firewatch",
+    "Developer": "Campo Santo",
+    "Platform": "PC",
+    "Genre": "Adventure / Indie",
+    "Price": 19.50,
+    "Description": "The year is 1989. You are a man named Henry who has retreated from his messy life to work as a fire lookout in the Wyoming wilderness. Perched high atop a mountain, it's your job to look for smoke and keep the wilderness safe.",
+    "ImageURL": "https://images.hdqwalls.com/download/firewatch-forest-mountains-minimalism-4k-hb-1920x1080.jpg"
+  },
+  {
+    "Name": "God of War Ragnarök",
+    "Developer": "Santa Monica Studio",
+    "Platform": "PS5",
+    "Genre": "Action / Adventure / RPG",
+    "Price": 65.99,
+    "Description": "God of War Ragnarök is an action-adventure game developed by Santa Monica Studio and published by Sony Interactive Entertainment.",
+    "ImageURL": "https://images.hdqwalls.com/download/god-of-war-ragnarok-46-1920x1080.jpg"
+  },
+  {
+    "Name": "Grand Theft Auto V",
+    "Developer": "Rockstar North",
+    "Platform": "PC",
+    "Genre": "Action / Adventure",
+    "Price": 29.98,
+    "Description": "Grand Theft Auto V is an action-adventure game played from either a third-person or first-person perspective. Players complete missions to progress through the story. Outside of the missions, players may freely roam the open world.",
+    "ImageURL": "https://images.hdqwalls.com/download/trevor-gta-5-8k-w2-1920x1080.jpg"
+  },
+  {
+    "Name": "Farming Simulator 22",
+    "Developer": "Giants Software",
+    "Platform": "PC",
+    "Genre": "Simulation",
+    "Price": 29.99,
+    "Description": "Take on the role of a modern farmer and creatively build your farm in three diverse American and European environments.",
+    "ImageURL": "https://media.sirusgaming.com/wp-content/uploads/2021/12/Farming-Simulator-22.jpg"
+  },
+  {
+    "Name": "Cyberpunk 2077",
+    "Developer": "CD PROJEKT RED",
+    "Platform": "PC",
+    "Genre": "RPG",
+    "Price": 59.99,
+    "Description": "Cyberpunk 2077 is an open-world, action-adventure story set in Night City, a megalopolis obsessed with power, glamour and body modification. You play as V, a mercenary outlaw going after a one-of-a-kind implant that is the key to immortality.",
+    "ImageURL": "https://images.hdqwalls.com/download/johnny-silverhand-cyberpunk-2077-5k-88-1920x1080.jpg"
+  },
+  {
+    "Name": "Horizon Forbidden West",
+    "Developer": "Guerrilla Games",
+    "Platform": "PS5",
+    "Genre": "Action / Adventure",
+    "Price": 59.99,
+    "Description": "Horizon Forbidden West is an action role-playing game played from a third-person perspective. The player controls Aloy, a hunter in a world populated by dangerous, animalistic machines.",
+    "ImageURL": "https://images.hdqwalls.com/download/horizon-forbidden-west-aloy-2022-4k-lv-1920x1080.jpg"
   }
 ]
