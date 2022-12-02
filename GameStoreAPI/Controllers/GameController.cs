@@ -64,9 +64,9 @@ namespace GameStoreAPI.Controllers
 
         [Route("genre/{name}")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GameModel>>> SearchGenre([FromRoute] string name)
+        public async Task<ActionResult<IEnumerable<GameModel>>> SearchGenre([FromRoute] string genre)
         {
-            IEnumerable<GameModel> result = await _gameService.SearchGenre(name);
+            IEnumerable<GameModel> result = await _gameService.SearchGenre(genre);
 
             if (result == null)
             {
