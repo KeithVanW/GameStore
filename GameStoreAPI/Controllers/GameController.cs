@@ -62,7 +62,7 @@ namespace GameStoreAPI.Controllers
             return Ok(result);
         }
 
-        [Route("genre/{name}")]
+        [Route("genre/{genre}")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GameModel>>> SearchGenre([FromRoute] string genre)
         {
