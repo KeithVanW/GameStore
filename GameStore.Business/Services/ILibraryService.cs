@@ -7,6 +7,6 @@ namespace GameStore.Business.Services
         Task<int> AddGamesToLibrary(string userId, int[] gameId);
         Task<int> DeleteLibrary(string userId);
         Task<int> DeleteSingleGame(string userId, int gameId);
-        Task<IEnumerable<GameModel>> GetGamesByUserIdAsync(string userId);
+        Task<LibraryOverviewModel> GetGamesByUserIdAsync(string userId);
     }
 }

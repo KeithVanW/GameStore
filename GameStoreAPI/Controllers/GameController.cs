@@ -71,7 +71,7 @@ namespace GameStoreAPI.Controllers
             {
                 return BadRequest();
             }
-            return Ok();
+            return Created("Game created", null);
         }
 
         [HttpPut("{id}")]
