@@ -90,5 +90,16 @@ namespace GameStore.Data.Repositories
         {
             return await _dataContext.Games.AnyAsync(x => x.GameID == id);
         }
+
+        public async Task<IEnumerable<GameEntity>> SearchGenre(string searchString)
+        {
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                List<GameEntity> games = await _dataContext.Games.Where(x => x.Genre.Contains(searchString)).ToListAsync();
+                return games;
+            }
+
+            return await GetAllGames();
+        }
     }
 }
