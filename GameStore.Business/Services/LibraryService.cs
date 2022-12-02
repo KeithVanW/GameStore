@@ -19,12 +19,19 @@ namespace GameStore.Business.Services
         }
 
 
-        public async Task<IEnumerable<GameModel>> GetGamesByUserIdAsync(string userId)
+        public async Task<LibraryOverviewModel> GetGamesByUserIdAsync(string userId)
         {
-            IEnumerable<LibraryEntity> entities = await _libraryRepo.GetGamesByUserIdAsync(userId);
-            IEnumerable<GameModel> models = entities.Select(x => _mapper.Map<GameModel>(x.Game));
+            IEnumerable<GameEntity> entities = (await _libraryRepo.GetGamesByUserIdAsync(userId)).Select(x => x.Game);
+            IEnumerable<GameModel> models = entities.Select(x => _mapper.Map<GameModel>(x));
 
-            return models;
+            LibraryOverviewModel model = new LibraryOverviewModel 
+            { 
+                UserId = userId,
+                Games = models,
+                TotalPrice = models.Sum(x => x.Price)
+            };
+
+            return model;
         }
 
         public async Task<int> AddGamesToLibrary(string userId, int[] gameId)

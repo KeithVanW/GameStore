@@ -14,16 +14,13 @@ namespace GameStoreAPI.Controllers
     public class CartController : ControllerBase
     {
         private readonly ICartService _cartService;
-        private readonly ILogger<CartController> _logger;
         private readonly UserManager<UserEntity> _userManager;
 
         public CartController(
             ICartService cartService,
-            ILogger<CartController> logger,
             UserManager<UserEntity> userManager)
         {
             _cartService = cartService;
-            _logger = logger;
             _userManager = userManager;
         }
 
@@ -32,7 +29,7 @@ namespace GameStoreAPI.Controllers
         {
             string userId = await GetUserIdAsync();
 
-            var result = await _cartService.GetGamesByUserIdAsync(userId);
+            CartOverviewModel result = await _cartService.GetGamesByUserIdAsync(userId);
             if (result == null)
             {
                 return NotFound("No games in cart");

@@ -32,12 +32,12 @@ namespace GameStoreAPI.Controllers
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            var user = await _userManager.FindByNameAsync(model.Username);
+            UserEntity user = await _userManager.FindByNameAsync(model.Username);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-                var userRoles = await _userManager.GetRolesAsync(user);
+                IList<string> userRoles = await _userManager.GetRolesAsync(user);
 
-                var authClaims = new List<Claim>
+                List<Claim> authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
@@ -48,7 +48,7 @@ namespace GameStoreAPI.Controllers
                     authClaims.Add(new Claim(ClaimTypes.Role, userRole));
                 }
 
-                var token = GetToken(authClaims);
+                JwtSecurityToken token = GetToken(authClaims);
 
                 return Ok(new
                 {
@@ -63,9 +63,11 @@ namespace GameStoreAPI.Controllers
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            var userExists = await _userManager.FindByNameAsync(model.Username);
-            if (userExists != null)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
+            UserEntity userExists = await _userManager.FindByNameAsync(model.Username);
+            if (userExists != null) 
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "User already exists!" });
+            }
 
             UserEntity user = new()
             {
@@ -73,24 +75,30 @@ namespace GameStoreAPI.Controllers
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username
             };
-            var result = await _userManager.CreateAsync(user, model.Password);
+
+            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = $"User creation failed! {result.Errors.First().Description}" });
+            {
+                string errors = string.Join(" ", result.Errors.Select(e => e.Description));
+                return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = $"User creation failed! {errors}" });
+            }
 
             if (await _roleManager.RoleExistsAsync(UserRoles.User))
             {
                 await _userManager.AddToRoleAsync(user, UserRoles.User);
             }
-            return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+            return Created("User created" ,new Response { Status = "Success", Message = "User created successfully!" });
         }
 
         [HttpPost]
         [Route("register-admin")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
         {
-            var userExists = await _userManager.FindByNameAsync(model.Username);
+            UserEntity userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)
+            {
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
+            }
 
             UserEntity user = new()
             {
@@ -98,14 +106,22 @@ namespace GameStoreAPI.Controllers
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username
             };
-            var result = await _userManager.CreateAsync(user, model.Password);
+
+            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = $"User creation failed! {result.Errors.First().Description}" });
+            {
+                string errors = string.Join(" ", result.Errors.Select(e => e.Description));
+                return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = $"User creation failed! {errors}" });
+            }
 
             if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
+            {
                 await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+            }
             if (!await _roleManager.RoleExistsAsync(UserRoles.User))
+            {
                 await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+            }
 
             if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
             {
@@ -115,7 +131,7 @@ namespace GameStoreAPI.Controllers
             {
                 await _userManager.AddToRoleAsync(user, UserRoles.User);
             }
-            return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+            return Created("Admin created", new Response { Status = "Success", Message = "User created successfully!" });
         }
 
         private JwtSecurityToken GetToken(List<Claim> authClaims)
