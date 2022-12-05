@@ -28,7 +28,7 @@ namespace GameStore.Business.Services
             {
                 UserId = userId,
                 Games = models,
-                TotalPrice = models.Sum(x => x.Price)
+                TotalPrice = Math.Round(models.Sum(x => x.Price),2)
             };
 
             return model;
