@@ -1,7 +1,6 @@
 ﻿using GameStore.Business.Models;
 using GameStore.Business.Services;
 using GameStore.Data.Entities;
-using GameStore.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +10,7 @@ namespace GameStoreAPI.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class LibraryController: ControllerBase
+    public class LibraryController : ControllerBase
     {
         private readonly ILibraryService _libraryService;
         private readonly ILogger<LibraryController> _logger;
@@ -30,7 +29,6 @@ namespace GameStoreAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<LibraryOverviewModel>> GetAllGames()
         {
-
             string userId = await GetUserIdAsync();
 
             LibraryOverviewModel result = await _libraryService.GetGamesByUserIdAsync(userId);

@@ -10,7 +10,6 @@ namespace GameStore.Business.Profiles
         {
             CreateMap<GameEntity, GameModel>();
 
-
             CreateMap<GameModel, GameEntity>()
                 .ForMember(x => x.GameID, opt => opt.Ignore());
         }

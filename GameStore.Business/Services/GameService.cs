@@ -18,15 +18,8 @@ namespace GameStore.Business.Services
 
         public async Task<GameModel> GetSingleGame(int id)
         {
-            // Everything that has to do with calculations (conversions, math, validation, security etc. should be in the business layer)
             GameEntity entity = await _repo.GetSingleGame(id);
             GameModel model = _mapper.Map<GameModel>(entity);
-
-            //model.PriceInDollar = model.Price * .95;
-
-            // Additional calculations can be performed here. 
-            // E.g. Convert price to $ and Lira
-            // TODO: I want to be able to see Prices in DOllar and EURO's but only Euro can be stored to the DB.
 
             return model;
         }
@@ -43,18 +36,7 @@ namespace GameStore.Business.Services
         {
             GameEntity entity = _mapper.Map<GameEntity>(game);
 
-            // TODO: Validation here
-            //ValidateGame(game);
-            // If(game == null) no game
-            // If(game.price <= 0) no price provided etc.
-
             return await _repo.AddGame(entity);
-        }
-
-        private void ValidateGame(GameModel game)
-        {
-            // TODO: Validation here
-            throw new NotImplementedException();
         }
 
         public async Task<int> UpdateGame(int id, GameModel game)
@@ -70,10 +52,10 @@ namespace GameStore.Business.Services
 
         public async Task<IEnumerable<GameModel>> Search(string name)
         {
-           IEnumerable<GameEntity> entities = await _repo.Search(name);
-           IEnumerable<GameModel> models = entities.Select(x => _mapper.Map<GameModel>(x));
+            IEnumerable<GameEntity> entities = await _repo.Search(name);
+            IEnumerable<GameModel> models = entities.Select(x => _mapper.Map<GameModel>(x));
 
-           return models;
+            return models;
         }
 
         public async Task<IEnumerable<GameModel>> SearchGenre(string genre)

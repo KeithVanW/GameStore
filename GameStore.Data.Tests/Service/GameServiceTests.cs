@@ -19,7 +19,6 @@ namespace GameStore.Business.Tests.Service
             IMapper mapper = MockMapper();
             var repoMock = new Mock<IGameRepo>();
 
-            // Setup mock to do something when a specific method is called
             repoMock.Setup(x => x.GetSingleGame(It.IsAny<int>())).ReturnsAsync(game);
 
             GameService service = new GameService(repoMock.Object, mapper);
@@ -49,7 +48,6 @@ namespace GameStore.Business.Tests.Service
 
             // Assert
             result.Should().HaveCount(3);
-
         }
 
         [Fact]
@@ -58,7 +56,7 @@ namespace GameStore.Business.Tests.Service
             // Arrange
             GameModel gameModel = GetMockModel();
             GameEntity gameEntity = GetMockEntity();
-            IEnumerable<GameEntity> gameList= GetMockEntities();
+            IEnumerable<GameEntity> gameList = GetMockEntities();
             IMapper mapper = MockMapper();
             var repoMock = new Mock<IGameRepo>();
 
@@ -84,7 +82,7 @@ namespace GameStore.Business.Tests.Service
             IMapper mapper = MockMapper();
             var repoMock = new Mock<IGameRepo>();
 
-            repoMock.Setup(x => x.UpdateGame(It.IsAny<int>(),gameEntity)).ReturnsAsync(1);
+            repoMock.Setup(x => x.UpdateGame(It.IsAny<int>(), gameEntity)).ReturnsAsync(1);
 
             GameService service = new GameService(repoMock.Object, mapper);
 
@@ -110,6 +108,7 @@ namespace GameStore.Business.Tests.Service
             };
             return game;
         }
+
         private GameModel GetMockModel()
         {
             GameModel game = new GameModel
@@ -123,9 +122,9 @@ namespace GameStore.Business.Tests.Service
                 ImageURL = "test.jpg"
             };
             return game;
-
         }
-        private IEnumerable<GameEntity> GetMockEntities() 
+
+        private IEnumerable<GameEntity> GetMockEntities()
         {
             IEnumerable<GameEntity> games = new List<GameEntity>();
             games = games.Append(new GameEntity
@@ -160,6 +159,7 @@ namespace GameStore.Business.Tests.Service
             }).ToList();
             return games;
         }
+
         private IMapper MockMapper()
         {
             var myProfile = new GameProfile();

@@ -1,4 +1,5 @@
-﻿using GameStore.Data.Context;
+﻿using GameStore.Business.Models;
+using GameStore.Data.Context;
 using GameStore.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using GameStore.Business.Models;
 
 namespace GameStoreAPI.Controllers
 {
@@ -64,7 +64,7 @@ namespace GameStoreAPI.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
             UserEntity userExists = await _userManager.FindByNameAsync(model.Username);
-            if (userExists != null) 
+            if (userExists != null)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "User already exists!" });
             }
@@ -87,7 +87,7 @@ namespace GameStoreAPI.Controllers
             {
                 await _userManager.AddToRoleAsync(user, UserRoles.User);
             }
-            return Created("User created" ,new Response { Status = "Success", Message = "User created successfully!" });
+            return Created("User created", new Response { Status = "Success", Message = "User created successfully!" });
         }
 
         [HttpPost]
