@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using GameStore.Business.Models;
-using GameStore.Data.Context;
 using GameStore.Data.Entities;
 using GameStore.Data.Repositories;
 
@@ -28,7 +27,7 @@ namespace GameStore.Business.Services
             {
                 UserId = userId,
                 Games = models,
-                TotalPrice = Math.Round(models.Sum(x => x.Price),2)
+                TotalPrice = Math.Round(models.Sum(x => x.Price), 2)
             };
 
             return model;

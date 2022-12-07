@@ -12,6 +12,7 @@ namespace GameStore.Data.Repositories
         {
             _dataContext = dataContext;
         }
+
         public async Task<IEnumerable<LibraryEntity>> GetGamesByUserIdAsync(string userId)
         {
             IEnumerable<LibraryEntity> games = await _dataContext.Libraries

@@ -1,6 +1,5 @@
 ﻿using GameStore.Business.Models;
 using GameStore.Business.Services;
-using GameStore.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,7 +39,7 @@ namespace GameStoreAPI.Controllers
         {
             IEnumerable<GameModel> result = await _gameService.GetAllGames();
 
-            if (result == null) 
+            if (result == null)
             {
                 return NotFound();
             }

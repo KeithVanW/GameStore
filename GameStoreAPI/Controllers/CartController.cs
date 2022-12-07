@@ -1,7 +1,6 @@
 ﻿using GameStore.Business.Models;
 using GameStore.Business.Services;
 using GameStore.Data.Entities;
-using GameStore.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

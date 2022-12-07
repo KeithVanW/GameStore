@@ -1,8 +1,6 @@
 ﻿using GameStore.Data.Entities;
-using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
-using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameStore.Data.Context
 {

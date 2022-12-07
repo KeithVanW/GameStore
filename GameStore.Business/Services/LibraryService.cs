@@ -18,14 +18,13 @@ namespace GameStore.Business.Services
             _mapper = mapper;
         }
 
-
         public async Task<LibraryOverviewModel> GetGamesByUserIdAsync(string userId)
         {
             IEnumerable<GameEntity> entities = (await _libraryRepo.GetGamesByUserIdAsync(userId)).Select(x => x.Game);
             IEnumerable<GameModel> models = entities.Select(x => _mapper.Map<GameModel>(x));
 
-            LibraryOverviewModel model = new LibraryOverviewModel 
-            { 
+            LibraryOverviewModel model = new LibraryOverviewModel
+            {
                 UserId = userId,
                 Games = models,
                 TotalPrice = models.Sum(x => x.Price)

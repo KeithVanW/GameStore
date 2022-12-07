@@ -12,6 +12,7 @@ namespace GameStore.Data.Repositories
         {
             _dataContext = dataContext;
         }
+
         public async Task<IEnumerable<CartEntity>> GetGamesByUserIdAsync(string userId)
         {
             IEnumerable<CartEntity> games = await _dataContext.Carts
@@ -40,7 +41,7 @@ namespace GameStore.Data.Repositories
             return await _dataContext.SaveChangesAsync();
         }
 
-        public async Task<Boolean> IsGameInCart(string userId ,int id)
+        public async Task<Boolean> IsGameInCart(string userId, int id)
         {
             return await _dataContext.Carts.AnyAsync(x => x.GameId == id & x.UserId == userId);
         }

@@ -35,7 +35,6 @@ namespace GameStore.Data.Entities
 
         public IList<LibraryEntity> UserGames { get; set; } = new List<LibraryEntity>();
 
-
         public IList<CartEntity> Cart { get; set; } = new List<CartEntity>();
     }
 }
